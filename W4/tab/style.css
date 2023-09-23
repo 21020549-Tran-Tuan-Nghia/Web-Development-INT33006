@@ -4,9 +4,9 @@
 
 .item {
     background-color: #cccccc;
-    border-left: solid 1px #dcdcdc;
-    border-right: solid 1px #dcdcdc;
-    border-top: solid 1px #dddddd;
+    border-left: solid 1.5px #dcdcdc;
+    border-right: solid 1.5px #dcdcdc;
+    border-top: solid 1.5px #dddddd;
     border-bottom: solid 0px #dddddd;
     padding: 2px;
     cursor: pointer;
