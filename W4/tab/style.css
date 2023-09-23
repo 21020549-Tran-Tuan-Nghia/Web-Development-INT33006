@@ -1,0 +1,24 @@
+.container {
+    display: flex;
+}
+
+.item {
+    background-color: #cccccc;
+    border-left: solid 1px #dcdcdc;
+    border-right: solid 1px #dcdcdc;
+    border-top: solid 1px #dddddd;
+    border-bottom: solid 0px #dddddd;
+    padding: 2px;
+    cursor: pointer;
+}
+.item:hover {
+    background-color: white;
+}
+
+.blue {
+    background-color: #00fafc;
+}
+
+.blue:hover {
+    background-color: #00fafc;
+}
