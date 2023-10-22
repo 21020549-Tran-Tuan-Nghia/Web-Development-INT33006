@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Tran Tuan Nghia 21020549">
+    <title>Tree</title>
+    <link rel="stylesheet" href="./style.css">
+    <script src="https://kit.fontawesome.com/3c35f3eeb3.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <ul>
+        <li class="has-child">
+            <i class="fa-regular fa-square-minus"></i>
+            <i class="fa-solid fa-folder-open"></i>Root
+
+            <ul>
+                <li class="no-child">
+                    <i class="fa-solid fa-folder-open"></i>Folder 1
+                </li>
+                <li class="has-child"><i class="fa-regular fa-square-minus"></i>
+                    <i class="fa-solid fa-folder-open"></i>Folder 2
+
+                    <ul>
+                        <li class="no-child">
+                            <i class="fa-solid fa-folder-open"></i>Folder 2-1
+                        </li>
+                        <li class="has-child"><i class="fa-regular fa-square-minus"></i>
+                            <i class="fa-solid fa-folder-open"></i>Folder 2-2
+
+                            <ul>
+                                <li class="no-child">
+                                    <i class="fa-solid fa-folder-open"></i>Folder 2-2-1
+                                </li>
+                                <li class="no-child">
+                                    <i class="fa-solid fa-folder-open"></i>Folder 2-2-2
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="no-child">
+                            <i class="fa-solid fa-folder-open"></i>Folder 2-3
+                        </li>
+                    </ul>
+                </li>
+                <li class="no-child">
+                    <i class="fa-solid fa-folder-open"></i>Folder 3
+                </li>
+                <li class="has-child"><i class="fa-regular fa-square-minus"></i>
+                    <i class="fa-solid fa-folder-open"></i>Folder 4
+
+                    <ul>
+                        <li class="no-child">
+                            <i class="fa-solid fa-folder-open"></i>Folder 4-1
+                        </li>
+                        <li class="no-child">
+                            <i class="fa-solid fa-folder-open"></i>Folder 4-2
+                        </li>
+                        <li class="no-child">
+                            <i class="fa-solid fa-folder-open"></i>Folder 4-3
+                        </li>
+                    </ul>
+                </li>
+                <li class="no-child">
+                    <i class="fa-solid fa-folder-open"></i>Folder 5
+                </li>
+            </ul>
+        </li>
+    </ul>
+</body>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+    $(".fa-regular").click(function () {
+        let $root = $(this);
+        let $ul = $root.next().next();
+        
+        if ($root.hasClass("fa-square-minus")) {
+            $root.removeClass("fa-square-minus").addClass("fa-square-plus");
+            $ul.hide();
+        } else {
+            $root.removeClass("fa-square-plus").addClass("fa-square-minus");
+            $ul.show();
+        }
+    });
+});
+
+</script>
+
+</html>

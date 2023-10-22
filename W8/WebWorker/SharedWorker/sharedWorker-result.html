@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Tran Tuan Nghia 21020549">
+    <title>Shared Worker Result</title>
+</head>
+
+<body>
+    <div>
+        Ảnh đã qua xử lý Sepia:<br>
+        <canvas class="target"></canvas>
+    </div>
+    <script>
+        let worker = new SharedWorker("script.js");
+        let canvas = document.querySelector("canvas.target");
+        
+        worker.port.onmessage = function (e) {
+            canvas.width = e.data[1];
+            canvas.height = e.data[2];
+            canvas.getContext("2d").putImageData(new ImageData(e.data[0], e.data[1], e.data[2]), 0, 0);
+        };
+    </script>
+</body>
+
+</html>

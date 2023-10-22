@@ -1,0 +1,28 @@
+table, th, td {
+    border: 1px solid #000;
+    border-collapse: collapse;
+}
+
+#remove {
+    height: 30px;
+}
+
+.heading {
+    background-color: #fc05a9;
+}
+
+.odd {
+    background-color: #dfdfdf;
+}
+
+.even {
+    background-color: #f0f0f0;
+}
+
+.selected {
+    background-color: yellow;
+}
+
+.no-display {
+    display: none;
+}

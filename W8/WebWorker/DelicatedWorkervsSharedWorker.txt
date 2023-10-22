@@ -1,0 +1,13 @@
+Sự khác biệt chính giữa Dedicated Worker và Shared Worker trong ví dụ là cách chúng xử lý luồng Worker và tương tác với trang web.
+
+Dedicated Worker (dw.js):
+1. Mỗi trang web sử dụng một Dedicated Worker riêng biệt (dw.js). Mỗi trang tạo một Worker mới bằng cách sử dụng `new Worker("dw.js")`.
+2. Mỗi Dedicated Worker hoạt động trong phạm vi của trang web cụ thể mà nó đã được tạo ra. Nó không thể tương tác với các trang web khác và không thể chia sẻ dữ liệu giữa các trang web.
+3. Khi bạn nhấn nút "Increase" trên một trang web, chỉ Worker của trang web đó được thực hiện tính toán đếm và phản hồi.
+
+Shared Worker (sw.js):
+1. Tất cả các trang web sử dụng cùng một Shared Worker (sw.js). Shared Worker được khởi tạo bằng cách sử dụng `new SharedWorker("sw.js")` và nhiều trang web có thể truy cập nó thông qua các port riêng biệt.
+2. Shared Worker có thể chia sẻ dữ liệu và thực hiện tính toán chung giữa các trang web khác nhau mà sử dụng cùng một Worker.
+3. Khi bạn nhấn nút "Increase" trên bất kỳ trang web nào, Shared Worker được thông báo và thực hiện tính toán đếm chung, sau đó gửi kết quả cho tất cả các trang web sử dụng nó.
+
+Sự khác biệt chính ở đây là sự chia sẻ và tương tác giữa nhiều trang web trong trường hợp Shared Worker. Shared Worker cho phép nhiều trang web tương tác với cùng một luồng Worker chung và chia sẻ kết quả tính toán, trong khi Dedicated Worker hoạt động riêng lẻ cho mỗi trang web.

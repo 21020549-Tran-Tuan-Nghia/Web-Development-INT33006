@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Tran Tuan Nghia 21020549">
+    <title>Shared Worker</title>
+    <style>
+        .nodisplay {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div>
+        <label>Chọn tệp ảnh:</label>
+        <input type="file" id="FileUpload" accept=".png,.jpg" />
+    </div>
+    <div>
+        Ảnh gốc:<br>
+        <img class="preview nodisplay" />
+    </div>
+    <div>
+        Ảnh qua biến đổi Sepia:<br>
+        <canvas class="target nodisplay"></canvas>
+    </div>
+</body>
+<script>
+    document.getElementById("FileUpload").onchange = function () {
+        let preview = document.querySelector("img.preview");
+        let canvas = document.querySelector("canvas.target");
+        let file = this.files[0];
+        let reader = new FileReader();
+
+        reader.onload = function () {
+            preview.src = reader.result;
+            preview.classList.remove("nodisplay");
+
+            setTimeout(function () {
+                canvas.width = preview.clientWidth;
+                canvas.height = preview.clientHeight;
+                let cvContext = canvas.getContext("2d");
+                cvContext.drawImage(preview, 0, 0, canvas.width, canvas.height);
+                let worker = new SharedWorker("script.js");
+
+                worker.port.onmessage = function (e) {
+                    cvContext.putImageData(new ImageData(e.data[0], e.data[1], e.data[2]), 0, 0);
+                    canvas.classList.remove("nodisplay");
+
+                };
+
+                let imgData = cvContext.getImageData(0, 0, canvas.width, canvas.height);
+                let pixels = imgData.data;
+                worker.port.postMessage([pixels, canvas.width, canvas.height]);
+            }, 100);
+        };
+
+        if (file) reader.readAsDataURL(file);
+    };
+</script>
+
+</html>

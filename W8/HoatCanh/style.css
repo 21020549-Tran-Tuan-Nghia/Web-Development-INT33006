@@ -1,0 +1,19 @@
+
+.control {
+    display: flex;
+    justify-content: center;
+}
+button {
+    margin: 5px;
+}
+
+.imgbox {
+    display: flex;
+    justify-content: center;
+    height: auto;
+    /* overflow: hidden; */
+}
+img {
+    height: 100%;
+    /* position: absolute; */
+}

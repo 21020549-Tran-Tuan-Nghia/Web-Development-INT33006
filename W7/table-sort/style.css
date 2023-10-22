@@ -1,0 +1,25 @@
+.normal > .arrow::after {
+    content: "\2195";
+}
+table, th, td {
+    border: 1px solid #000;
+    border-collapse: collapse;
+}
+.heading {
+    background-color: #cccccc;
+}
+.asc > .arrow::after {
+    content: "\2191";
+    background-color: yellow;
+    color: red;
+    font-weight: bold;
+}
+.desc > .arrow::after {
+    content: "\2193";
+    background-color: yellow;
+    color: red;
+    font-weight: bold;
+}
+.sortcol {
+    cursor: pointer;
+}

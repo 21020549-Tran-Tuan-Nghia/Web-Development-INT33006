@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Tran Tuan Nghia 21020549">
+    <title>Fetch</title>
+    <link rel="stylesheet" href="./style.css">
+</head>
+
+<body>
+    <button id="loadButton">Tải dữ liệu vào bảng sau</button>
+    <table>
+        <thead>
+            <th>Họ và tên</th>
+            <th>Tuổi</th>
+            <th>Số lượng/Tên-mẫu xe</th>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+
+</body>
+<script type="text/javascript">
+    document.getElementById("loadButton").onclick = function () {
+        this.disabled = true;
+
+        fetch('data') 
+            .then(response => response.json()) 
+            .then(data => { 
+                const tableBody = document.querySelector("table");
+
+                data.forEach(item => {
+                    var r = document.createElement("tr");
+                        var name = document.createElement("td");
+                        var age = document.createElement("td");
+                        var quantity = document.createElement("td");
+
+                        name.innerHTML = item.name;
+                        age.innerHTML = item.age;
+                        quantity.innerHTML = "";
+                        for (var j = 0; j < item.cars.length; j++)
+                            quantity.innerHTML += item.cars[j].name + ":  "+ item.cars[j].models + "<br>";
+
+                        r.appendChild(name);
+                        r.appendChild(age);
+                        r.appendChild(quantity);
+                        tableBody.appendChild(r);
+                });
+            })
+            .catch(error => console.error('Đã xảy ra lỗi:', error));
+    }
+</script>
+
+</html>

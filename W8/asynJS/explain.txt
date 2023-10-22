@@ -1,0 +1,150 @@
+1. sync
+
+document.querySelector('button.sync').onclick = function() {
+			clearOutput(); //Xóa hết dữ liệu output đã hiện
+			output("BEGIN sync"); //Đẩy vào callstack và in ra "BEGIN sync" ngay.
+			let ret = sFunction(); //Hàm sFunction trả về xâu được gán vào ret.
+			output(ret); //Đẩy vào callstack và in ra giá trị xâu truyền trong biến ret ngay.
+			output("END."); //Đẩy vào callstack và in ra "END." ngay.
+		};
+
+
+2. setTimeout
+
+document.querySelector('button.settimeout').onclick = function() {
+			clearOutput(); //Xóa hết dữ liệu output đã hiện.
+			output("BEGIN settimeout"); //Đẩy vào callstack và in ra "BEGIN settimeout".
+			setTimeout( //Đưa lệnh chạy hàm vào callback queue
+				function() {
+					let ret = sFunction();
+					output(ret);
+				  }, 
+				0);
+			output("END."); //Đưa vào stack và in ra "END." ngay.
+			//Lúc này callstack rỗng, quay lại chạy hàm callback trong timeout -> in biến ret.
+		};
+
+3. promise
+
+function aFunction1 () {
+			return new Promise(function(fulfill, reject) {
+				fulfill("Hello A1!");
+			});
+		}
+
+document.querySelector('button.promise').onclick = function() {
+			clearOutput(); //Xóa hết dữ liệu output đã hiện.
+			output("BEGIN promise"); //Đẩy vào callstack và in ra "BEGIN promise" ngay.
+			aFunction1().then(function (ret) { //Trả về "Hello A1!" từ promise, đẩy hàm trong then vào callback queue dạng microtask.
+	 			output(ret);
+			});
+			output("END."); //Đẩy vào callstack và in ra "END." ngay.
+			//Lúc này callstack đã rỗng, lấy hàm trong callback queue ra chạy, in ra ret.
+		};
+
+4. async
+
+async function aFunction2 () {
+			return ("Hello A2!");
+		}
+
+document.querySelector('button.async').onclick = function() {
+			clearOutput(); //Xóa hết dữ liệu output đã hiện.
+			output("BEGIN async"); //Đẩy vào callstack và in ra "BEGIN async" ngay.
+			aFunction2().then(function (ret) { //Trả về "Hello A2!" và đưa hàm trong then vào callback queue.
+	 			output(ret);
+			});
+			output("END."); //Đẩy vào callstack và in ra "END." ngay.
+			//Callstack rỗng và lấy ra từ queue rồi chạy, in ra biến ret.
+		};
+
+5. await
+
+function aFunction1 () {
+			return new Promise(function(fulfill, reject) {
+				fulfill("Hello A1!");
+			});
+		}
+		
+document.querySelector('button.await').onclick = async function() {
+			clearOutput(); //Xóa hết dữ liệu output đã hiện.
+			output("BEGIN await"); //Đẩy vào callstack và in ra "BEGIN await" ngay.
+			let ret = await aFunction1(); //Tạm dừng chạy hàm callback hiện tại để chạy hàm aFunction1(), trả về ret = "Hello A1!"
+ 			output(ret); //Đẩy vào callstack và in ra ret = "Hello A1!".
+			output("END."); //Đẩy vào callstack và in ra "END." ngay.
+		};
+
+6. async and sync
+
+function sFunction () {
+			return ("Hello S!");
+		}
+function aFunction1 () {
+			return new Promise(function(fulfill, reject) {
+				fulfill("Hello A1!");
+			});
+		}
+async function aFunction2 () {
+			return ("Hello A2!");
+		}
+
+document.querySelector('button.syncvsasync').onclick = function() {
+			clearOutput(); //Xóa hết dữ liệu output đã hiện.
+			output("BEGIN sync vs async"); //Đẩy vào callstack và in ra "BEGIN sync vs async" ngay.
+			aFunction1().then(function (ret) { //Trả về "hello A1!" và đưa hàm trong then vào queue dạng microtask
+	 			output(ret);
+			});
+			aFunction2().then(function (ret) { //Tạm dừng chạy hàm hiện thời để chạy hàm async aFunction2(), sau khi xong thì đẩy hàm ở trong then vào callback queue.
+	 			output(ret);
+			});
+			let ret = sFunction(1); //Đẩy lệnh chạy hàm sFunction vào callstack và thực thi ngay, gán ret cho "Hello S!"
+			output(ret); //Đẩy vào callstack và in ra ret = "Hello S!".
+			output("END."); //Đẩy vào callstack và in ra "END." ngay.
+			//Lúc này callstack đã rỗng, check và lấy ra từ queue và chạy hàm then của aFunction1(), sau đó in ra ret = "Hello A1!", sau đó chạy hàm trong then phía sau aFunction2()
+			//Như vậy thứ tự kết quả sẽ là: "BEGIN sync vs async", "Hello S!", "END", "Hello A1!", "Hello A2!"
+		};
+		
+6. waitall
+
+function aFunction1 () {
+			return new Promise(function(fulfill, reject) {
+				fulfill("Hello A1!");
+			});
+		}
+async function aFunction2 () {
+			return ("Hello A2!");
+		}
+		
+document.querySelector('button.waitall').onclick = function() {
+			clearOutput(); //Xóa hết dữ liệu output đã hiện.
+			output("BEGIN waitall"); //Đẩy vào callstack và in ra "BEGIN waitall" ngay.
+			let p1 = aFunction1(); // Lưu p1 như một promise, trả fullfill là "Hello A1!".
+			let p2 = aFunction2(); // Chạy ngay và gán vào p2 "Hello A2!".
+			Promise.all([p1, p2]).then(function (arr) { //p1, p2 đã được xác định rõ giá trị trả về, đẩy hàm trong then vào queue.
+				output(arr[0]);
+				output(arr[1]);
+			});
+			output("END."); //Đẩy vào callstack và in ra "END." ngay.
+			//Call stack rỗng, lấy ra từ queue, in ra "Hello A1!", "Hello A2!".
+		};
+
+7. mixed
+
+document.querySelector('button.mixed').onclick = function() {
+			clearOutput(); //Xóa hết dữ liệu output đã hiện.
+			output("BEGIN mixed"); //Đẩy vào callstack và in ra "BEGIN mixed" ngay.
+			setTimeout(() => { output('setTimeout 1'); }, 10); //Đẩy vào queue dưới dạng macrotask.
+			setTimeout(() => { output('setTimeout 2'); }, 0); //Đẩy vào queue dưới dạng microtask.
+
+			new Promise(function(fulfill, reject) { fulfill('Promise 1'); }) //Trả fulfill 'Promise 1'
+			.then (function(res) { output(res); return "Sub Promise 1";}) // Đâỷ vào queue dạng microtask cấp 1
+			.then (function(res) { output(res); }); // Đâỷ vào queue dạng microtask cấp 2
+
+			new Promise((fulfill, reject) => { fulfill('Promise 2'); }) //Trả fulfill 'Promise 2'
+			.then (res => {output(res); return "Sub Promise 2";}) // Đâỷ vào queue dạng microtask cấp 1
+			.then (res => {output(res);}); // Đâỷ vào queue dạng microtask cấp 2
+			output("END."); //Đẩy vào callstack và in ra "END." ngay.
+			
+			//Giờ call stack rỗng, lấy ra từ queue theo thứ tự ưu tiên: microtask -> in 'Promise 1', 'Promise 2', "Sub Promise 1",  "Sub Promise 2", rồi mới in ra 'setTimeout 2' (0s delay), 'setTimeout 1' (10ms delay)
+		};
+		
