@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+    <div class="container">
+        <form action="post" id="form1">
+            <label for="student_id" class="newrow">Mã:</label>
+            <input type="text" name="student_id" id="student_id">
+            <span id="id_error" class="error"></span>
+            <br>
+            <label for="student_name" class="newrow">Họ tên:</label>
+            <input type="text" name="student_name" id="student_name">
+            <span id="name_error" class="error"></span>
+            <br>
+            <label for="student_birth" class="newrow">Ngày sinh:</label>
+            <input type="text" name="student_birth" id="student_birth">
+            <span id="birth_error" class="error"></span>
+            <br>
+            <label for="student_gender" class="newrow">Giới tính:</label>
+            <select name="gender" id="gender">
+                <option value="1" selected="selected">
+                    Nam
+                </option>
+                <option value="0">
+                    Nữ
+                </option>
+            </select>
+            <br>
+            <label for="student_home" class="newrow">Quê quán:</label>
+            <input type="text" name="student_home" id="student_home">
+            <br>
+            <label for="" class="newrow">&nbsp;</label>
+            <input type="button" id="accept" value="Chấp nhận">
+            <input type="button" id="refuse" value="Bỏ qua">
+        </form>
+    </div>
+    <script type="text/javascript" src="./jquery-3.7.1.min.js"></script>
+    <script type="text/javascript" src="./util.js"></script>
+    <script type="text/javascript">
+        function normalizeFullName() {
+            $('#student_name').val(normalizeName($('#student_name').val()))
+        }
+        function accept() {
+            $('#student_id').html("")
+            $('#student_name').html("")
+            $('#student_birth').html("")
+            if ($('#student_id').val() === "") {
+                $('#id_error').html('Chưa nhập mã.')
+            }
+            if ($('#student_name').val() === "") {
+                $('#name_error').html('Chưa nhập mã.')
+            }
+            if ($('#student_birth').val() !== "") {
+                if (!normalizeBirthday($('#student_birth').val())) {
+                    $('#birth_error').html('Ngày sinh không đúng')
+                }
+            }
+        }
+        $(document).ready(function() {
+            $('#student_name').blur(normalizeFullName)
+            $('#accept').click(accept)
+        })
+    </script>
+</body>
+</html>
