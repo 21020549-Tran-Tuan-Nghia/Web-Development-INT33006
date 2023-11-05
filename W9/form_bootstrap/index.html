@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Tran Tuan Nghia 21020549">
+    <title>Document</title>
+    <link rel="stylesheet" href="./bootstrap.min.css">
+</head>
+
+<body>
+    <div class="container">
+      <div class="row">
+        <div class=" col-md-2"></div>
+        <div class=" col-md-6">
+          <h2>Lab. Form nhập</h2>
+        </div>
+        <div class=" col-md-4"></div>
+      </div>
+      <form method="post" id="form1" class="form-horizontal">
+        <div class="form-group">
+          <label for="student_id" class="control-label col-md-2">Mã:</label>
+          <div class="col-md-6">
+            <input type="text" name="student_id" id="student_id" class="form-control">
+          </div>
+          <div class="col-md-4">
+            <span id="id_error" class="errornote" ></span>
+				  </div>
+        </div>
+        <div class="form-group">
+          <label for="student_name" class="control-label col-md-2">Họ tên:</label>
+          <div class="col-md-6">
+            <input type="text" name="student_name" id="student_name" class="form-control">
+          </div>
+          <div class="col-md-4">
+            <span id="name_error" class="errornote" ></span>
+				  </div>
+        </div>
+        <div class="form-group">
+          <label for="student_birth" class="control-label col-md-2">Ngày sinh:</label>
+          <div class="col-md-6">
+            <input type="text" name="student_birth" id="student_birth" class="form-control">
+          </div>
+          <div class="col-md-4">
+            <span id="birth_error" class="errornote" ></span>
+				  </div>
+        </div>
+        <div class="form-group">
+          <label for="student_gender" class="control-label col-md-2">Giới tính:</label>
+          <div class="col-md-6">
+            <select name="gender" id="gender">
+              <option value="1" selected="selected">
+                Nam
+              </option>
+              <option value="0">
+                  Nữ
+              </option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="student_home" class="control-label col-md-2">Quê quán:</label>
+          <div class="col-md-6">
+            <input type="text" name="student_home" id="student_home" class="form-control">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="control-label col-md-2">&nbsp;</label>
+          <div class="col-md-6">
+            <input type="button" id="accept" value = "Chấp nhận" class="btn"/>
+            <input type="button" value = "Bỏ qua" class="btn"/>
+          </div>
+        </div>
+      </form>
+    </div>
+    <script type="text/javascript" src="./jquery-3.7.1.min.js"></script>
+    <script type="text/javascript" src="./script.js"></script>
+    <script type="text/javascript">
+      function normalizeFullName() {
+        $('#student_name').val(normalizeName($('#student_name').val()))
+      }
+      function accept() {
+        $('#student_id').html("")
+        $('#student_name').html("")
+        $('#student_birth').html("")
+        if ($('#student_id').val() === "") {
+          $('#id_error').html("Chưa nhập mã.")
+        }
+        if ($('#student_name').val() === "") {
+          $('#name_error').html("Chưa nhập họ tên.")
+        }
+        if ($('#student_birth').val() !== "") {
+          if (!normalizeBirthday($('#student_birth').val())) {
+            $('#birth_error').html('Ngày sinh không đúng.')
+          }
+        }
+      }
+      $(document).ready(function() {
+        $('#student_name').blur(normalizeFullName)
+        $('#accept').click(accept)
+      })
+    </script>
+</body>
+
+</html>
